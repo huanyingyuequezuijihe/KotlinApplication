@@ -83,6 +83,14 @@ fun main(args:Array<String>){
 
     }
     println("${aa}和${bb}中的最大值为"+returnBig(aa,bb))
+
+    //kotlin 字符串比较
+    var str1="张三"
+    var str2="张三"
+    //判断两个字符串是否相等
+    println(str1==str2)//在java中，判断的是地址值
+    println(str1.equals(str2))//在java中，用equals方法判断字符串
+    println(str1.equals(str2,true))//第二个参数表示忽略字母的大小写
 }
 fun print5star(){
     println(" *****")
