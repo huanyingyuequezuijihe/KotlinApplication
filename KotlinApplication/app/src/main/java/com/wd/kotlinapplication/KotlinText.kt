@@ -65,6 +65,24 @@ fun main(args:Array<String>){
     //kotlin  字符串模板
     val diaryGenerater = diaryGenerater("紫荆宫")
     println(diaryGenerater)
+
+    //kotlin  if else判断
+    var score=90;
+    if(score>=90){
+        println("这是一个帅哥")
+    }else{
+        println("这是一个衰哥")
+    }
+    var aa=3
+    var bb=7
+    fun returnBig(aa:Int,bb:Int):Int{
+        if(aa>bb)
+            return aa
+        else
+            return bb
+
+    }
+    println("${aa}和${bb}中的最大值为"+returnBig(aa,bb))
 }
 fun print5star(){
     println(" *****")
