@@ -128,13 +128,19 @@ fun main(args:Array<String>){
     for((i,e) in lists.withIndex()){
         println("${i} ${e}")
     }
-    //map
+    //map   有键 有值
     var maps=TreeMap<String,String>()
     maps["s"]="good"
     maps["a"]="a"
     maps["b"]="b"
     maps["c"]="c"
     println(maps["s"])
+
+    //函数  函数表达式
+    fun add(x:Int,y:Int)=x+y  //可以省略{}，并直接赋值
+    var i={x:Int,y:Int -> x+y}  //结果一样，格式不同
+    //接收两个int类型的值   返回一个值
+    var j:(Int,Int)->Int={x,y -> x+y}
 }
 fun print5star(){
     println(" *****")
