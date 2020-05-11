@@ -109,6 +109,13 @@ fun main(args:Array<String>){
         7 -> println("c")
         else -> println("d")
     }
+
+    //Loop：循环    Range:区间
+    var nums=1..30
+    var nums2=1 until 100 //[1,100)
+    nums2.reversed() //倒叙  反转
+    for (n in nums step 2)
+        print("${n},")
 }
 fun print5star(){
     println(" *****")
@@ -136,6 +143,18 @@ fun saveLog(logLevel:Int):Unit{
 }
 //日记生成器，接收参数是地点，返回值是内容
 fun diaryGenerater(placeName:String):String{
-    var temple="今天要去${placeName}游玩，首先映入眼帘的是${placeName}这${placeName.length}个鎏金大字"
+    var temple="今天要去${placeName}游玩，首先映入眼帘的是${placeName}这${numToChinese(placeName.length)}个鎏金大字"
    return temple
+}
+//数字 转换 汉字
+fun numToChinese(num:Int):String{
+    var result=when(num){
+        1 ->"一"
+        2 ->"二"
+        3 ->"三"
+        4 ->"四"
+        5 ->"五"
+        else ->"太长没记住"
+    }
+    return result
 }
