@@ -1,5 +1,7 @@
 package com.wd.kotlinapplication
 
+import java.util.*
+
 /**
  * @author 王阳
  * Class :1708A
@@ -116,6 +118,23 @@ fun main(args:Array<String>){
     nums2.reversed() //倒叙  反转
     for (n in nums step 2)
         print("${n},")
+
+    //list  map  入门
+    //list  .withIndex()有下标的取数据
+    var lists= listOf("买冰激凌","买苹果","买零食")
+    for(l in lists){
+        println(l)
+    }
+    for((i,e) in lists.withIndex()){
+        println("${i} ${e}")
+    }
+    //map
+    var maps=TreeMap<String,String>()
+    maps["s"]="good"
+    maps["a"]="a"
+    maps["b"]="b"
+    maps["c"]="c"
+    println(maps["s"])
 }
 fun print5star(){
     println(" *****")
