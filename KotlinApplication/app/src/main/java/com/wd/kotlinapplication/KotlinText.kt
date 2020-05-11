@@ -99,6 +99,16 @@ fun main(args:Array<String>){
     }
     val heat = heat(null)
     println(heat)
+
+    //when 使用
+    score=10
+    when(score){
+        10 -> println("good")
+        9 -> println("a")
+        8 -> println("b")
+        7 -> println("c")
+        else -> println("d")
+    }
 }
 fun print5star(){
     println(" *****")
