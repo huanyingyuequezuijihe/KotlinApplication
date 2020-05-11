@@ -91,6 +91,14 @@ fun main(args:Array<String>){
     println(str1==str2)//在java中，判断的是地址值
     println(str1.equals(str2))//在java中，用equals方法判断字符串
     println(str1.equals(str2,true))//第二个参数表示忽略字母的大小写
+
+    //空值处理，null在计算器中也是值，表示没有数据
+    //加上问号，代表参数可以为空
+    fun heat(str:String?):String{
+        return "热"+str
+    }
+    val heat = heat(null)
+    println(heat)
 }
 fun print5star(){
     println(" *****")
