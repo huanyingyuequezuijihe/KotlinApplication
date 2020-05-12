@@ -11,4 +11,5 @@ package com.wd.kotlinapplication
 abstract class Human(var name:String) {
     //抽象abstract
     abstract fun eat()
+    abstract fun pee()
 }

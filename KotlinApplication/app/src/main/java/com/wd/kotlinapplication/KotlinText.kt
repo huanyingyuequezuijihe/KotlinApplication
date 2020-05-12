@@ -211,6 +211,14 @@ fun main(args:Array<String>){
     person1.eat()
     var person2=Woman("爱丽丝");
     person2.eat()
+
+    //多态  同种功能不同表现形式
+    var person3=Man("华盛顿");
+    var person4=Woman("艾莉莉");
+    val houseList = listOf<Human>(person1, person2, person3, person4)
+    for(h in houseList){
+        h.pee()
+    }
 }
 fun print5star(){
     println(" *****")

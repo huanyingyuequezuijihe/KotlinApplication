@@ -11,4 +11,7 @@ class Woman(name:String) :Human(name){
     override fun eat(){
         println("${name}小口的吃")
     }
+    override fun pee() {
+        println("${name}贤妻良母")
+    }
 }
