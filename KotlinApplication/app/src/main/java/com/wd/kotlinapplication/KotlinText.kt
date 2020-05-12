@@ -169,6 +169,29 @@ fun main(args:Array<String>){
         }
     }
     println("${num1}的阶乘为${fact(num1)}")
+
+    //尾递归优化  tailrec
+    //累加 操作 4的累加  4+3+2+1
+    //注意 次数过多  会溢出 报错
+    fun oldAdd(n:Int):Int{
+        if(n==1){
+            return 1
+        }else{
+            return n+oldAdd(n-1)
+        }
+    }
+    println("累加结果：${oldAdd(5)}")
+    tailrec fun newAdd(s:Int,result:Int):Int{
+        println("计算机第${s}次运算，result=${result}")
+        if(s==0){
+            return 1
+        }else{
+            return newAdd(s-1,result+s)
+        }
+    }
+    println("累加结果：${newAdd(5,0)}")
+
+    //idea使用入门
 }
 fun print5star(){
     println(" *****")
