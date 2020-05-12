@@ -197,6 +197,9 @@ fun main(args:Array<String>){
     var rect01=Rect(10,20);
     println("矩形的高度是:${rect01.height}")
     println("矩形的宽度是:${rect01.width}")
+
+    //封装   隐藏内部实现细节   加上private
+    setMotorSpeed(50)
 }
 fun print5star(){
     println(" *****")
@@ -238,4 +241,8 @@ fun numToChinese(num:Int):String{
         else ->"太长没记住"
     }
     return result
+}
+//封装
+private fun setMotorSpeed(speed:Int){
+    println("当前转速${speed}圈/秒")
 }
