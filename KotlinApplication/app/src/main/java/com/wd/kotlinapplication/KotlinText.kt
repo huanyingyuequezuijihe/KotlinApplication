@@ -148,6 +148,15 @@ fun main(args:Array<String>){
     }
     val sum = getSum(3.14f, 5f)
     println("圆的周长为"+sum)
+
+    //人机交互
+    println("请输入第一个数字:")
+    var num1str= readLine();
+    println("请输入第二个数字:")
+    var num2str= readLine();
+    var toInt1 = num1str?.toInt()//加上问号，则是指该数据可以为空
+    var toInt2 = num2str?.toInt()
+    println("${toInt1}...."+toInt2)
 }
 fun print5star(){
     println(" *****")
