@@ -251,6 +251,8 @@ fun main(args:Array<String>){
     }
 
     //闭包  closure
+    //函数式编程
+    //图片处理  BufferedImage 参数:宽度，高度，图片类型
 }
 fun print5star(){
     println(" *****")
