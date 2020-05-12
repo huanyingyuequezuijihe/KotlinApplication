@@ -1,5 +1,7 @@
 package com.wd.kotlinapplication
 
+import com.wd.kotlinapplication.wash.BigHeadSon
+import com.wd.kotlinapplication.wash.SmallHeadFather
 import java.util.*
 
 /**
@@ -228,6 +230,12 @@ fun main(args:Array<String>){
             p.eat()
         }
     }
+
+    //委托和代理
+    var son=BigHeadSon()
+    son.washBow1()
+    var father=SmallHeadFather()
+    father.washBow1()
 }
 fun print5star(){
     println(" *****")
