@@ -141,6 +141,13 @@ fun main(args:Array<String>){
     var i={x:Int,y:Int -> x+y}  //结果一样，格式不同
     //接收两个int类型的值   返回一个值
     var j:(Int,Int)->Int={x,y -> x+y}
+
+    //默认参数   具名参数
+    fun getSum(PI:Float,r:Float):Float{//圆的周长
+        return 2*PI*r
+    }
+    val sum = getSum(3.14f, 5f)
+    println("圆的周长为"+sum)
 }
 fun print5star(){
     println(" *****")
