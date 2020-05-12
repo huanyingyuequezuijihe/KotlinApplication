@@ -200,6 +200,17 @@ fun main(args:Array<String>){
 
     //封装   隐藏内部实现细节   加上private
     setMotorSpeed(50)
+
+    //继承(open和override)
+    val girl2 = Girl("萝莉","柔美");
+    println("性格${girl2.chactor}")
+    girl2.action()
+
+    //定义抽象类 实现抽象类
+    var person1=Man("拿破仑");
+    person1.eat()
+    var person2=Woman("爱丽丝");
+    person2.eat()
 }
 fun print5star(){
     println(" *****")

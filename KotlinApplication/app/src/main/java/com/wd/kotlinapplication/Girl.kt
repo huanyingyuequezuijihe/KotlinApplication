@@ -7,12 +7,16 @@ package com.wd.kotlinapplication
  * @date :2020/5/12 10:03
  * @classname :Girl
  */
-class Girl(var chacyor:String,var voice:String){
+class Girl(var chacyor:String,var voice:String) :Person(){
     fun smile(){
         println("妹子笑了一下，好甜呀")
     }
     fun cry(){
         println("呜呜呜，人家好伤心")
+    }
+
+    override fun action() {
+        println("学习高等知识")
     }
 }
 
