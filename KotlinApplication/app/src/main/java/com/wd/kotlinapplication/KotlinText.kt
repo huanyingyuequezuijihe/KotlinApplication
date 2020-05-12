@@ -192,6 +192,11 @@ fun main(args:Array<String>){
     println("累加结果：${newAdd(5,0)}")
 
     //idea使用入门
+    //面向对象
+    class Rect(var height:Int,var width:Int)
+    var rect01=Rect(10,20);
+    println("矩形的高度是:${rect01.height}")
+    println("矩形的宽度是:${rect01.width}")
 }
 fun print5star(){
     println(" *****")
