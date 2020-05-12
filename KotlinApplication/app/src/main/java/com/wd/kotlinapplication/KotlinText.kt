@@ -236,6 +236,8 @@ fun main(args:Array<String>){
     son.washBow1()
     var father=SmallHeadFather()
     father.washBow1()
+
+    //单例模式
 }
 fun print5star(){
     println(" *****")

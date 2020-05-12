@@ -13,8 +13,10 @@ class SmallHeadFather :IWashBow1 by BigHeadSon(){
         println("小头爸爸，在洗碗，一次10元")
     }*/
     override fun washBow1() {
+        //委托前
         println("小头爸爸洗碗，一次10元")
         BigHeadSon().washBow1()
+        //委托后
         println("我把任务交给了儿子")
     }
 }
