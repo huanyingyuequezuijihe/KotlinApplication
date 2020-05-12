@@ -1,5 +1,6 @@
 package com.wd.kotlinapplication
 
+import com.wd.kotlinapplication.son.Son
 import com.wd.kotlinapplication.wash.BigHeadSon
 import com.wd.kotlinapplication.wash.SmallHeadFather
 import java.util.*
@@ -238,6 +239,18 @@ fun main(args:Array<String>){
     father.washBow1()
 
     //单例模式
+    //密封类 sealed class
+    var s1:Son=Son.xiaolv()
+    var s2:Son=Son.xiaoluozi()
+    var s3:Son=Son.xiaolv()
+    var list= listOf<Son>(s1,s2,s3)
+    for(v in list){
+        if(v is Son.xiaolv){
+            v.sayHello()
+        }
+    }
+
+    //闭包  closure
 }
 fun print5star(){
     println(" *****")
