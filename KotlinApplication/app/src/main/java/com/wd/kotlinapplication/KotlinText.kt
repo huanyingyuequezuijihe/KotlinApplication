@@ -219,6 +219,15 @@ fun main(args:Array<String>){
     for(h in houseList){
         h.pee()
     }
+
+    //接口IMan 抽象类
+    //接口是事物的能力  抽象类是事物的本质
+    person1.xiaodidi()
+    for(p in houseList){
+        if(p is Man){
+            p.eat()
+        }
+    }
 }
 fun print5star(){
     println(" *****")
