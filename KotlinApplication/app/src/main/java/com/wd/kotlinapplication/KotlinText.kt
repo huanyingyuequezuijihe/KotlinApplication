@@ -157,6 +157,18 @@ fun main(args:Array<String>){
     var toInt1 = num1str?.toInt()//加上问号，则是指该数据可以为空
     var toInt2 = num2str?.toInt()
     println("${toInt1}...."+toInt2)
+
+    //递归  no递龟  如：5的阶乘：5*4*3*2*1
+    //如果数大，越界，用BigInteger()方法
+    num1=5
+    fun fact(n:Int):Int{
+        if(n==1){
+            return 1
+        }else{
+            return n*fact(n-1)
+        }
+    }
+    println("${num1}的阶乘为${fact(num1)}")
 }
 fun print5star(){
     println(" *****")
