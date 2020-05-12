@@ -68,4 +68,8 @@ fun main(args:Array<String>){
     println("凯撒加密："+encrypt)
     val decrypt = CaesarCrypt().decrypt(encrypt, key)
     println("凯撒解密："+decrypt)
+
+    //自 破解凯撒密文
+    //频率分析法
+    //找到找到出现频率最多的字符，对比找到 key  然后解密
 }
