@@ -19,12 +19,14 @@ object RSACrypt{
     val transformation="RSA"
     //每次最大加密的长度
     val ENCRYPT_MAX_SIZE=117
+    //每次最大解密长度
+    val DECRYPT_MAX_SIZE=256
 
     /**私钥加密
      * input  原文
      * privateKey  私钥
      */
-    fun encryptBiPrivateKey(input:String,privateKey:PrivateKey): String? {
+    fun encryptBiPrivateKey(input:String,privateKey:PrivateKey): String {
         //将传入的input原文进行分段
         val byteArray = input.toByteArray()
 
@@ -53,7 +55,7 @@ object RSACrypt{
                 //加密最后一块
                 temp= cipher.doFinal(byteArray,offset, byteArray.size-offset)
                 //重新计算偏移的位置
-                offset+= byteArray.size
+                offset= byteArray.size
             }
             //存储到临时的缓存区
             bos.write(temp)
@@ -67,7 +69,7 @@ object RSACrypt{
      * input  原文
      * privateKey  私钥
      */
-    fun encryptBiPublicKey(input:String,publicKey: PublicKey): String? {
+    fun encryptBiPublicKey(input:String,publicKey: PublicKey): String {
         //将传入的input原文进行分段
         val byteArray = input.toByteArray()
 
@@ -95,7 +97,7 @@ object RSACrypt{
                 //加密最后一块
                 temp= cipher.doFinal(byteArray,offset, byteArray.size-offset)
                 //重新计算偏移的位置
-                offset+= byteArray.size
+                offset= byteArray.size
             }
             //存储到临时的缓存区
             bos.write(temp)
@@ -103,6 +105,86 @@ object RSACrypt{
         //关流
         bos.close()
         return Base64.encode(bos.toByteArray())
+    }
+
+    /**私钥解密
+     * input  密文
+     * privateKey  私钥
+     */
+    fun decryptBiPrivateKey(input:String,privateKey:PrivateKey): String {
+        //将传入的input原文进行分段
+        val byteArray = Base64.decode(input)
+
+        //1.创建cipher
+        val cipher = Cipher.getInstance(transformation)
+        //2.初始化cipher
+        //val key: Key?=null
+        cipher.init(Cipher.DECRYPT_MODE,privateKey)
+        //3.解密   分段解密
+
+        //
+        var temp:ByteArray?=null
+        var offset=0  //当前偏移的位置
+        val bos = ByteArrayOutputStream()
+
+        while(byteArray.size -offset>0){ //说明没有加密完
+            //每次最大解密长度 为256
+            if(byteArray.size - offset >= DECRYPT_MAX_SIZE){
+                temp= cipher.doFinal(byteArray,offset, DECRYPT_MAX_SIZE)
+                //重新计算偏移的位置
+                offset+= DECRYPT_MAX_SIZE
+            }else{
+                //加密最后一块
+                temp= cipher.doFinal(byteArray,offset, byteArray.size-offset)
+                //重新计算偏移的位置
+                offset = byteArray.size
+            }
+            //存储到临时的缓存区
+            bos.write(temp)
+        }
+        //关流
+        bos.close()
+        return String(bos.toByteArray())
+    }
+
+    /**公钥解密
+     * input  密文
+     * publicKey  私钥
+     */
+    fun decryptBiPublicKey(input:String,publicKey:PublicKey): String {
+        //将传入的input原文进行分段
+        val byteArray = Base64.decode(input)
+
+        //1.创建cipher
+        val cipher = Cipher.getInstance(transformation)
+        //2.初始化cipher
+        //val key: Key?=null
+        cipher.init(Cipher.DECRYPT_MODE,publicKey)
+        //3.解密   分段解密
+
+        //
+        var temp:ByteArray?=null
+        var offset=0  //当前偏移的位置
+        val bos = ByteArrayOutputStream()
+
+        while(byteArray.size -offset>0){ //说明没有加密完
+            //每次最大解密长度 为256
+            if(byteArray.size - offset >= DECRYPT_MAX_SIZE){
+                temp= cipher.doFinal(byteArray,offset, DECRYPT_MAX_SIZE)
+                //重新计算偏移的位置
+                offset+= DECRYPT_MAX_SIZE
+            }else{
+                //加密最后一块
+                temp= cipher.doFinal(byteArray,offset, byteArray.size-offset)
+                //重新计算偏移的位置
+                offset = byteArray.size
+            }
+            //存储到临时的缓存区
+            bos.write(temp)
+        }
+        //关流
+        bos.close()
+        return String(bos.toByteArray())
     }
 }
 fun main(args:Array<String>){
@@ -132,4 +214,10 @@ fun main(args:Array<String>){
 
     val encryption = RSACrypt.encryptBiPublicKey(input, publicKey)
     println("RSA公钥加密="+encryption)
+
+    val decrypt = RSACrypt.decryptBiPrivateKey(encryption, privateKey)
+    println("RSA私钥解密="+decrypt)
+
+    val decryption = RSACrypt.decryptBiPublicKey(encrypt, publicKey)
+    println("RSA公钥解密="+decryption)
 }
