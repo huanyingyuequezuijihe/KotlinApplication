@@ -42,7 +42,7 @@ object AESCrypt{
         cipher.init(Cipher.DECRYPT_MODE,keySpec)
         //3.加密/解密
         val encrypt = cipher.doFinal(Base64.decode(input))
-        val result = String(encrypt)
+        val result = String(encrypt)//要返回字符串，不能再编码了
         return result
     }
 }
