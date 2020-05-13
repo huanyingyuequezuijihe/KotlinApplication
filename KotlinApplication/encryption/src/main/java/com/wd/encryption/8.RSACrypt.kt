@@ -1,11 +1,11 @@
 package com.wd.encryption
 
 import java.io.ByteArrayOutputStream
-import java.security.Key
-import java.security.KeyPairGenerator
-import java.security.PrivateKey
-import java.security.PublicKey
+import java.security.*
+import java.security.spec.PKCS8EncodedKeySpec
+import java.security.spec.X509EncodedKeySpec
 import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
 
 /**
  * @author 王阳
@@ -190,7 +190,7 @@ object RSACrypt{
 fun main(args:Array<String>){
     //如何生成密钥对
     //密钥对生成器
-    val generator = KeyPairGenerator.getInstance("RSA")
+    /*val generator = KeyPairGenerator.getInstance("RSA")
     //通过生成器，生成密钥对
     val keyPair = generator.genKeyPair()
     val publicKey = keyPair.public   //公钥
@@ -198,13 +198,23 @@ fun main(args:Array<String>){
     //可以打印看看
     println("publicKey="+Base64.encode(publicKey.encoded))//取编码，可以借助base64
     println("privateKey="+Base64.encode(privateKey.encoded))
-    //************非对接加密三部曲*************
+    //   ***********非对接加密三部曲*************
     //1.创建cipher
-   /* val cipher = Cipher.getInstance("RSA")
+    val cipher = Cipher.getInstance("RSA")
     //2.初始化cipher
-    val key: Key?=null
-    cipher.init(Cipher.ENCRYPT_MODE,key)*/
+    //val key: Key?=null
+    //cipher.init(Cipher.ENCRYPT_MODE,key)
     //3.加密/解密
+*/
+    //保存密钥对
+    val publicKeyStr ="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiADQ7C3bh8qlkxoBgmPDGVd1V+dljHhKdPYAO/lbvq2kEpdlqk+ggqQrvgL6zVLEMaUTSSDnMq0rvt7RoZNdPiCzIrN/pgERXtMl69HT5nhHbBa1JLI9gTiGAICp2qCP2ODH8DeInJqzJHlvIKS0PdqFlYT6EIz5crXxbdHYla/Vdo97MYTr/rYf9YFWgu+E1o2Lx21ChYQeeEf/zTT/zCLaHbFPOPV2e2gO+ZC9LYkr0SugubtjMGFMeCjLcntQjgzY0v3h5c95Ia6RkngSSI8ch0OHZ7pzCMSTRFs50J3rhXz+JCvlVWU5rTVEAFDyh0f4Ry0WyzNA8RboPb8/VQIDAQAB"
+    val privateKeyStr="MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCIANDsLduHyqWTGgGCY8MZV3VX52WMeEp09gA7+Vu+raQSl2WqT6CCpCu+AvrNUsQxpRNJIOcyrSu+3tGhk10+ILMis3+mARFe0yXr0dPmeEdsFrUksj2BOIYAgKnaoI/Y4MfwN4icmrMkeW8gpLQ92oWVhPoQjPlytfFt0diVr9V2j3sxhOv+th/1gVaC74TWjYvHbUKFhB54R//NNP/MItodsU849XZ7aA75kL0tiSvRK6C5u2MwYUx4KMtye1CODNjS/eHlz3khrpGSeBJIjxyHQ4dnunMIxJNEWznQneuFfP4kK+VVZTmtNUQAUPKHR/hHLRbLM0DxFug9vz9VAgMBAAECggEAUORLX26XGFlLyga5xxgXPsdqH/Kdz8LsZky7LvDNxMf6wqQR8A6UZZ/H9KhJDD6iOvT4V5KecOHXFxvoi7Xey8kfQxCIZ/BSqJfmAjE3W+lGcd+/tifdtTItYbclT8gYRuLLiPE+7AaHbrZbhorwOanzsk75fUacR8I36x3ZOI4PIGObenjaRw8W1yvUvADoFYn586nmp2We7IfeMZL8aQxKVim7aXw47BAIMTCXdrChxaHSCEEu2m+82mQwd3LMoDT/jHh47EkR6PaOhpN699DTMwJkYgpXsIPKIfZJ4/kF3XofqJzqiCHLgEFX3fPo6F6Sidxvyzzbj5MhBiv6AQKBgQDgeSkdih4j9v4iLqZ76uYXNNOAWUA0fLgNN1eCgN5d8Fl5w2gw8tpoklRADcs2jNXiu3HyWy557PD+4bicVmkz683y5+BhjMRu6OkMyR+WUtcfHKvQxYIeQ+jBLTjdztbfnLKX884LZisFkGPgX2709afam0Q4vmqwJ5iuKBGwIQKBgQCbGsBrfAcZ/iXCu8cZfC4S/A4qBiXyXRhrMAeQElpgNbrn3OYmNmYQuC7P4ouzm0MH/98XdiVcdZjeUhp5D866p1TVx3DLQ7mkM9RqxZomFpVs2rO4md/lNVLOS8a7JEAw7vbQaAdZptoILQVZpohCk/eF4Zysgc++waxaVea4tQKBgQDNCt+btAZEI+GPp707hB4ZJI/ttZkIWMRmjh7Jfp2ggWO57dzGmY8X5lI/EFqHwa2+Jiq3jsKtbNnWeKkBZY1DeCnvsA8uDD+CcA4xN6Y60gDe0nm/giqRKsb5bi17ruxn5eLdGj8j+ndh5brVwVbBO4PQE/QFQSqDLigxLTi7AQKBgE/Z+e5cMBvFqBMVMW+BawcDFRe1ipu4KfYlB/+4MycNAmiUZTiPEQTSjecgruOMr3nS1Tvy61EqicULZ+2job6enyJgR0WeXFiZBmbhzHaHce5Uuenz7jzGsxbaFDoMc6+9lvu8Uuxo5h8HbpW1ErmUC/61JD/7pMSEWQM47ktxAoGASAgafK7bMNmyMRXqGW2pMyN/gjM7mTTRq1aqpM2pk3polNmk9+jF7q0am0tQZpNavEPOAbAeJtZtYqtmhbxZdURthk7RGtFoNYvL/qeO70ic0LVw0ywwQ/z9JA8hSauMZW/nBzJdC9SD+ur7gpX6nJOshA0UOpZjKIL8NtHmn+4="
+
+    //要将字符串  转换为对象  密钥对对象
+    val kf = KeyFactory.getInstance("RSA")//密钥工厂
+
+    val privateKey:PrivateKey= kf.generatePrivate(PKCS8EncodedKeySpec(Base64.decode(privateKeyStr)))
+    val publicKey:PublicKey=kf.generatePublic(X509EncodedKeySpec(Base64.decode(publicKeyStr)))
 
     val input="幻影月缺醉几何"
     //调用加密  加密有要求，不能超过117个字节（一个汉字三个字节）
