@@ -4,6 +4,7 @@ import java.security.Key
 import javax.crypto.Cipher
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.DESKeySpec
+import javax.crypto.spec.IvParameterSpec
 
 /**
  * @author 王阳
@@ -13,18 +14,26 @@ import javax.crypto.spec.DESKeySpec
  * @classname :DESCrypt
  */
 object DESCrypt{
+    //算法/工作模式/填充模式
+    //val transformation="DES/ECB/PKCS5Padding"
+    val transformation="DES/CBC/PKCS5Padding"//使用CBC  下边
+    //算法
+    val algorithm="DES"
+
     //加密
     fun encrypt(input:String,password:String): String {
-        val cipher=Cipher.getInstance("DES")
+        val cipher=Cipher.getInstance(transformation)
 
         //2.初始化cipher 参数1：加密/解密的模式
         //密钥 工厂
-        val kf = SecretKeyFactory.getInstance("DES")
+        val kf = SecretKeyFactory.getInstance(algorithm)
         val keySpec=DESKeySpec(password.toByteArray())
         val generateSecret = kf.generateSecret(keySpec)
 
         val key:Key?=generateSecret  //允许为空
-        cipher.init(Cipher.ENCRYPT_MODE,key)//加密模式
+        //使用CBC模式 添加一个参数
+        val iv=IvParameterSpec(password.toByteArray())
+        cipher.init(Cipher.ENCRYPT_MODE,key,iv)//加密模式
 
         //3.加密/解密
         val encrypt = cipher.doFinal(input.toByteArray())
@@ -35,16 +44,18 @@ object DESCrypt{
 
     //解密
     fun decrypt(input:String,password:String): ByteArray {
-        val cipher=Cipher.getInstance("DES")
+        val cipher=Cipher.getInstance(transformation)
 
         //2.初始化cipher 参数1：加密/解密的模式
         //密钥 工厂
-        val kf = SecretKeyFactory.getInstance("DES")
+        val kf = SecretKeyFactory.getInstance(algorithm)
         val keySpec=DESKeySpec(password.toByteArray())
         val generateSecret = kf.generateSecret(keySpec)
 
         val key:Key?=generateSecret  //允许为空
-        cipher.init(Cipher.DECRYPT_MODE,key)//解密模式
+        //使用CBC模式 添加一个参数
+        val iv=IvParameterSpec(password.toByteArray())
+        cipher.init(Cipher.DECRYPT_MODE,key,iv)//解密模式
 
         //3.加密/解密
         //val encrypt = cipher.doFinal(input.toByteArray())
