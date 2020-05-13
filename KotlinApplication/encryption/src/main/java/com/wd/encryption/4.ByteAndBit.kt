@@ -1,4 +1,4 @@
-package com.wd.encryption.`4`
+package com.wd.encryption
 
 /**
  * @author 王阳
