@@ -1,5 +1,6 @@
 package com.wd.encryption
 
+import java.io.ByteArrayOutputStream
 import java.security.Key
 import java.security.KeyPairGenerator
 import java.security.PrivateKey
@@ -16,20 +17,50 @@ import javax.crypto.Cipher
 object RSACrypt{
     //
     val transformation="RSA"
+    //每次最大加密的长度
+    val ENCRYPT_MAX_SIZE=117
 
     /**私钥加密
      * input  原文
      * privateKey  私钥
      */
     fun encryptBiPrivateKey(input:String,privateKey:PrivateKey): String? {
+        //将传入的input原文进行分段
+        val byteArray = input.toByteArray()
+
         //1.创建cipher
          val cipher = Cipher.getInstance(transformation)
          //2.初始化cipher
          //val key: Key?=null
          cipher.init(Cipher.ENCRYPT_MODE,privateKey)
-        //3.加密/解密
-        val encrypt = cipher.doFinal(input.toByteArray())
-        return Base64.encode(encrypt)
+        //3.加密   分段加密
+        //val encrypt = cipher.doFinal(input.toByteArray())
+
+        //
+        var temp:ByteArray?=null
+        var offset=0  //当前偏移的位置
+        val bos = ByteArrayOutputStream()
+
+        while(byteArray.size -offset>0){ //说明没有加密完
+            //每次最大加密的长度
+            if(byteArray.size - offset >= ENCRYPT_MAX_SIZE){
+                //说明 剩余部分 大于117
+                //加密完整117长度的代码
+                temp= cipher.doFinal(byteArray,offset, ENCRYPT_MAX_SIZE)
+                //重新计算偏移的位置
+                offset+= ENCRYPT_MAX_SIZE
+            }else{
+                //加密最后一块
+                temp= cipher.doFinal(byteArray,offset, byteArray.size-offset)
+                //重新计算偏移的位置
+                offset+= byteArray.size
+            }
+            //存储到临时的缓存区
+            bos.write(temp)
+        }
+        //关流
+        bos.close()
+        return Base64.encode(bos.toByteArray())
     }
 
     /**公钥加密
@@ -37,14 +68,41 @@ object RSACrypt{
      * privateKey  私钥
      */
     fun encryptBiPublicKey(input:String,publicKey: PublicKey): String? {
+        //将传入的input原文进行分段
+        val byteArray = input.toByteArray()
+
         //1.创建cipher
         val cipher = Cipher.getInstance(transformation)
         //2.初始化cipher
         //val key: Key?=null
         cipher.init(Cipher.ENCRYPT_MODE,publicKey)
         //3.加密/解密
-        val encrypt = cipher.doFinal(input.toByteArray())
-        return Base64.encode(encrypt)
+        //val encrypt = cipher.doFinal(input.toByteArray())
+        //
+        var temp:ByteArray?=null
+        var offset=0  //当前偏移的位置
+        val bos = ByteArrayOutputStream()
+
+        while(byteArray.size -offset>0){ //说明没有加密完
+            //每次最大加密的长度
+            if(byteArray.size - offset >= ENCRYPT_MAX_SIZE){
+                //说明 剩余部分 大于117
+                //加密完整117长度的代码
+                temp= cipher.doFinal(byteArray,offset, ENCRYPT_MAX_SIZE)
+                //重新计算偏移的位置
+                offset+= ENCRYPT_MAX_SIZE
+            }else{
+                //加密最后一块
+                temp= cipher.doFinal(byteArray,offset, byteArray.size-offset)
+                //重新计算偏移的位置
+                offset+= byteArray.size
+            }
+            //存储到临时的缓存区
+            bos.write(temp)
+        }
+        //关流
+        bos.close()
+        return Base64.encode(bos.toByteArray())
     }
 }
 fun main(args:Array<String>){
@@ -67,7 +125,8 @@ fun main(args:Array<String>){
     //3.加密/解密
 
     val input="幻影月缺醉几何"
-    //调用加密
+    //调用加密  加密有要求，不能超过117个字节（一个汉字三个字节）
+    //这个时候 可以使用  分段加密
     val encrypt = RSACrypt.encryptBiPrivateKey(input, privateKey)
     println("RSA私钥加密="+encrypt)
 
